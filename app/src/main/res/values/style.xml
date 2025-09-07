@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="MobileApp" parent="Base.Theme.MobileAndroidAppKotlin" >
+
+        <!-- Body text -->
+        <item name="android:textColor">@color/dark</item>
+        <item name="android:textSize">@dimen/text_normal</item>
+    </style>
+
+    <style name="MobileApp.Title" parent="MobileApp">
+
+        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+</resources>

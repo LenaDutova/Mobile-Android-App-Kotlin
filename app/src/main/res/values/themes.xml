@@ -1,0 +1,24 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.MobileAndroidAppKotlin" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimaryContainer">@color/purple_light</item>
+        <item name="colorOnPrimaryContainer">@color/purple_dark</item>
+
+        <item name="colorSecondary">@color/grey</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">@color/grey_light</item>
+        <item name="colorOnSecondaryContainer">@color/grey_dark</item>
+
+        <item name="colorTertiary">@color/lilac</item>
+        <item name="colorOnTertiary">@color/white</item>
+        <item name="colorTertiaryContainer">@color/lilac_light</item>
+        <item name="colorOnTertiaryContainer">@color/lilac_dark</item>
+
+        <item name="colorSurface">@color/light</item>
+        <item name="colorOnSurface">@color/dark</item>
+    </style>
+</resources>
