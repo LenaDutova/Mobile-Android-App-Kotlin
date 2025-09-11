@@ -52,7 +52,7 @@ class ReturningActivity : AppCompatActivity() {
         }
 
         if (toggle.checkedButtonId != R.id.btn_not_defined) {
-            intent.putExtra(StartActivity.GENDER, (toggle.checkedButtonId == R.id.btn_man).toString())
+            intent.putExtra(StartActivity.GENDER, (toggle.checkedButtonId == R.id.btn_man))
         } else {
             Snackbar.make(findViewById(R.id.main), "Choose gender", Snackbar.LENGTH_LONG).show()
             return
