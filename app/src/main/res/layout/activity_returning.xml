@@ -28,21 +28,21 @@
             android:id="@+id/btn_man"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Man"
+            android:text="@string/toggle_man"
             />
         <Button
             style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/btn_not_defined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Not defined"
+            android:text="@string/toggle_not_defined"
             />
         <Button
             style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/btn_woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Woman"
+            android:text="@string/toggle_woman"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/normal"
 
-        android:hint="Введите имя"
+        android:hint="@string/et_enter_name"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,7 @@
         android:layout_margin="@dimen/normal"
 
         style="?attr/materialButtonStyle"
-        android:text="Register"
+        android:text="@string/btn_register"
 
         app:layout_constraintTop_toBottomOf="@+id/toggle_button"
         app:layout_constraintStart_toStartOf="parent"

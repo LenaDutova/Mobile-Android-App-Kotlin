@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
-import com.mobile.vedroid.kt.extensions.logToDebug
+import com.mobile.vedroid.kt.extensions.debugging
 
 class ReturningActivity : AppCompatActivity() {
 
@@ -28,7 +28,7 @@ class ReturningActivity : AppCompatActivity() {
             insets
         }
 
-        logToDebug("HI")
+        debugging("HI")
 
 
         login = findViewById(R.id.login)
@@ -36,7 +36,7 @@ class ReturningActivity : AppCompatActivity() {
 
         val btnStart : Button = findViewById(R.id.btn_to_start)
         btnStart.setOnClickListener {
-            logToDebug("Click to final")
+            debugging("Click to final")
             returnToActivity()
         }
     }

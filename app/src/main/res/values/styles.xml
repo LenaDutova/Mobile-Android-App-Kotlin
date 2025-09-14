@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="MobileApp" parent="Base.Theme.MobileAndroidAppKotlin" >
-
+    <style name="MobileApp" parent="Base.Theme.MobileKotlin" >
         <!-- Body text -->
         <item name="android:textColor">@color/dark</item>
         <item name="android:textSize">@dimen/text_normal</item>

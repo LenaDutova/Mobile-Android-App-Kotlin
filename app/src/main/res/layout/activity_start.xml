@@ -33,7 +33,7 @@
         android:layout_margin="@dimen/normal"
 
         style="?attr/materialButtonStyle"
-        android:text="Don't Introduce"
+        android:text="@string/btn_next"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -46,11 +46,9 @@
         android:layout_margin="@dimen/normal"
 
         style="?attr/materialButtonOutlinedStyle"
-        android:text="Introduce yourself"
+        android:text="@string/btn_introduce_yourself"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_to_final" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

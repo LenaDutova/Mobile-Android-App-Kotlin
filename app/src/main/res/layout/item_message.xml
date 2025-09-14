@@ -20,7 +20,7 @@
         <ImageView
             android:layout_width="@dimen/tall"
             android:layout_height="@dimen/tall"
-            android:background="@drawable/ic_launcher_foreground"
+            android:background="@drawable/android"
             android:backgroundTint="?attr/colorOnPrimaryContainer"/>
 
         <TextView

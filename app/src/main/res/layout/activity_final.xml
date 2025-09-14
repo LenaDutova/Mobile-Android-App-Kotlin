@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,8 +7,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?attr/colorOnSurface"
+
     android:id="@+id/main"
     tools:context=".FinalActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/normal"
+
+        style="@style/MobileApp.Title"
+        android:text="@string/text_no_data"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_items"
@@ -16,6 +27,7 @@
         android:layout_height="match_parent"
 
         tools:listitem="@layout/item_message"
+        tools:visibility="gone"
         />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

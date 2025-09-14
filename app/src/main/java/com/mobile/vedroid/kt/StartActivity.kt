@@ -2,7 +2,6 @@ package com.mobile.vedroid.kt
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -12,7 +11,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.mobile.vedroid.kt.extensions.logToDebug
+import com.mobile.vedroid.kt.extensions.debugging
 
 class StartActivity : AppCompatActivity() {
 
@@ -35,17 +34,17 @@ class StartActivity : AppCompatActivity() {
             insets
         }
 
-        logToDebug("HI")
+        debugging("HI")
 
         val btnFinal : Button = findViewById(R.id.btn_to_final)
         btnFinal.setOnClickListener {
-            logToDebug("Click to final")
+            debugging("Click to final")
             openActivity()
         }
 
         val btnReturning : Button = findViewById(R.id.btn_to_returning)
         btnReturning.setOnClickListener {
-            logToDebug("Click to returning")
+            debugging("Click to returning")
             openActivityForResult()
         }
 
@@ -67,11 +66,8 @@ class StartActivity : AppCompatActivity() {
     private fun openActivityForResult(): Unit {
         val intent = Intent(this, ReturningActivity::class.java)
 
-//        // @Deprecated
-//        startActivityForResult(intent, REQUEST)
-
-        // new way
-        resultLauncher.launch(intent)
+//        startActivityForResult(intent, REQUEST)   // @Deprecated way
+        resultLauncher.launch(intent)   // New way
     }
 
 //    // @Deprecated

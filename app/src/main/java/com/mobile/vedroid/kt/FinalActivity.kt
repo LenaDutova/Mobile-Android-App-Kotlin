@@ -5,7 +5,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.mobile.vedroid.kt.extensions.logToDebug
+import com.mobile.vedroid.kt.extensions.debugging
 
 class FinalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +19,6 @@ class FinalActivity : AppCompatActivity() {
             insets
         }
 
-        logToDebug("HI")
+        debugging("HI")
     }
 }

@@ -6,6 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 const val DEBUG: Boolean = true
 const val TAG: String = "TAG"
 
-fun AppCompatActivity.logToDebug(message: String) {
+fun AppCompatActivity.debugging(message: String) {
     if (DEBUG) Log.d("${TAG}_${localClassName}", message)
 }
