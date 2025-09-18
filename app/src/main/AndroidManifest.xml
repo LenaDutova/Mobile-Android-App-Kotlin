@@ -14,7 +14,7 @@
         android:theme="@style/Base.Theme.MobileKotlin">
 
         <activity
-            android:name=".StartActivity"
+            android:name=".SingleActivity"
             android:exported="true">
 
             <intent-filter>
@@ -22,14 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".ReturningActivity"
-            android:exported="false"/>
-
-        <activity
-            android:name=".FinalActivity"
-            android:exported="false"/>
 
     </application>
 

@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
 
     android:id="@+id/main"
-    tools:context=".StartActivity">
+    tools:context=".fragments.StartFragment">
 
     <TextView
         android:id="@+id/tv_greeting"

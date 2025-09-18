@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
 
     android:id="@+id/main"
-    tools:context=".ReturningActivity">
+    tools:context=".fragments.ReturningFragment">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/toggle_button"
