@@ -17,7 +17,7 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.debugging("HI")
+        debugging("HI")
 
         login = view.findViewById(R.id.login)
         toggle = view.findViewById(R.id.toggle_button)

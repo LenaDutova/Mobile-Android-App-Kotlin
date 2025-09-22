@@ -27,7 +27,7 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity)
+//        setContentView(R.layout.activity) // in constructor now
 
         enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -38,13 +38,12 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 
         debugging("HI")
 
-        // or use android:name in FragmentContainerView
-        if (savedInstanceState == null) {
-            supportFragmentManager.commit {
-                setReorderingAllowed(true)
-                add<StartFragment>(R.id.main)
-            }
-        }
+//        if (savedInstanceState == null) {      // or use android:name in FragmentContainerView
+//            supportFragmentManager.commit {
+//                setReorderingAllowed(true)
+//                add<StartFragment>(R.id.main)
+//            }
+//        }
     }
 
     fun navigate (jump : Int, args: Bundle? = null) : Unit {
@@ -54,17 +53,17 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 
                 supportFragmentManager.commit {
                     replace(R.id.main, ReturningFragment::class.java, null)
-                    setReorderingAllowed(true)
+                    setReorderingAllowed(true)  // optimizes the state changes
                     addToBackStack("start")
                 }
             }
             JUMP_FROM_RETURNING -> {
                 debugging("Return to start fragment with registration data")
 
-                if (args != null) supportFragmentManager.popBackStack()
+                supportFragmentManager.popBackStack()
                 supportFragmentManager.commit {
                     replace(R.id.main, StartFragment::class.java, args)
-                    setReorderingAllowed(true)
+                    setReorderingAllowed(true)  // optimizes the state changes
                 }
             }
             JUMP_TO_FINAL -> {
@@ -72,7 +71,7 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 
                 supportFragmentManager.commit {
                     replace(R.id.main, FinalFragment::class.java, null)
-                    setReorderingAllowed(true)
+                    setReorderingAllowed(true)  // optimizes the state changes
                 }
             }
             else ->{debugging("Navigate Error")}

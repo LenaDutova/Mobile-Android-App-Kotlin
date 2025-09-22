@@ -13,7 +13,7 @@ class StartFragment : Fragment(R.layout.fragment_start) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        activity?.debugging("HI")
+        debugging("HI")
 
         val btnFinal : Button = view.findViewById(R.id.btn_to_final)
         btnFinal.setOnClickListener {

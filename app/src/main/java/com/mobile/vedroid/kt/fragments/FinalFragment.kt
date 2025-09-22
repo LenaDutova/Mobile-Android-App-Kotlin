@@ -21,11 +21,12 @@ class FinalFragment : Fragment (R.layout.fragment_final) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+//        activity?.debugging("HI")   // HI from SingleActivity
         debugging("HI")
 
         placeholder = view.findViewById<TextView>(R.id.rv_placeholder)
 
-        messageAdapter = MessageAdapter(view.context)
+        messageAdapter = MessageAdapter()
         messageAdapter.messages = getMockMessages()
 
         recyclerView = view.findViewById(R.id.rv_messages)
@@ -53,7 +54,7 @@ class FinalFragment : Fragment (R.layout.fragment_final) {
         return messages
     }
 
-    class MessageAdapter (val context: Context, var messages: List<String> = listOf()) :
+    class MessageAdapter (var messages: List<String> = listOf()) :
         RecyclerView.Adapter<MessageAdapter.ViewHolder>(){
 
         class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
