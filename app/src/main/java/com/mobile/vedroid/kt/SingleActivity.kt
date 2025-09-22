@@ -17,10 +17,7 @@ import com.mobile.vedroid.kt.fragments.StartFragment
 class SingleActivity : AppCompatActivity (R.layout.activity) {
 
     companion object {
-        const val JUMP_TO_RETURNING = 1
-        const val JUMP_FROM_RETURNING = 2
-        const val JUMP_TO_FINAL = 3
-
+        const val REGISTER : String = "REGISTER"
         const val LOGIN : String = "LOGIN"
         const val GENDER : String = "GENDER"
     }
@@ -46,37 +43,37 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 //        }
     }
 
-    fun navigate (jump : Int, args: Bundle? = null) : Unit {
-        when (jump) {
-            JUMP_TO_RETURNING -> {
-                debugging("Open fragment to registration")
-
-                supportFragmentManager.commit {
-                    replace(R.id.main, ReturningFragment::class.java, null)
-                    setReorderingAllowed(true)  // optimizes the state changes
-                    addToBackStack("start")
-                }
-            }
-            JUMP_FROM_RETURNING -> {
-                debugging("Return to start fragment with registration data")
-
-                supportFragmentManager.popBackStack()
-                supportFragmentManager.commit {
-                    replace(R.id.main, StartFragment::class.java, args)
-                    setReorderingAllowed(true)  // optimizes the state changes
-                }
-            }
-            JUMP_TO_FINAL -> {
-                debugging("Open fragment with recycle view list")
-
-                supportFragmentManager.commit {
-                    replace(R.id.main, FinalFragment::class.java, null)
-                    setReorderingAllowed(true)  // optimizes the state changes
-                }
-            }
-            else ->{debugging("Navigate Error")}
-        }
-    }
+//    fun navigate (jump : Int, args: Bundle? = null) : Unit {
+//        when (jump) {
+//            JUMP_TO_RETURNING -> {
+//                debugging("Open fragment to registration")
+//
+//                supportFragmentManager.commit {
+//                    replace(R.id.main, ReturningFragment::class.java, null)
+//                    setReorderingAllowed(true)  // optimizes the state changes
+//                    addToBackStack("start")
+//                }
+//            }
+//            JUMP_FROM_RETURNING -> {
+//                debugging("Return to start fragment with registration data")
+//
+//                supportFragmentManager.popBackStack()
+//                supportFragmentManager.commit {
+//                    replace(R.id.main, StartFragment::class.java, args)
+//                    setReorderingAllowed(true)  // optimizes the state changes
+//                }
+//            }
+//            JUMP_TO_FINAL -> {
+//                debugging("Open fragment with recycle view list")
+//
+//                supportFragmentManager.commit {
+//                    replace(R.id.main, FinalFragment::class.java, null)
+//                    setReorderingAllowed(true)  // optimizes the state changes
+//                }
+//            }
+//            else ->{debugging("Navigate Error")}
+//        }
+//    }
 
     fun showSnackBar (message : String ){
         Snackbar.make(findViewById(R.id.main), message, Snackbar.LENGTH_LONG).show()

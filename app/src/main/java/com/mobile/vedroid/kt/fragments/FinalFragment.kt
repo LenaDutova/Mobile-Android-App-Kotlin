@@ -1,6 +1,5 @@
 package com.mobile.vedroid.kt.fragments
 
-import android.content.Context
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,8 +19,6 @@ class FinalFragment : Fragment (R.layout.fragment_final) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-//        activity?.debugging("HI")   // HI from SingleActivity
         debugging("HI")
 
         placeholder = view.findViewById<TextView>(R.id.rv_placeholder)
