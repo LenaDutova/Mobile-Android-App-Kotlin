@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.SingleActivity
 import com.mobile.vedroid.kt.extensions.debugging
+import com.mobile.vedroid.kt.model.Account
 
 class ReturningFragment : Fragment(R.layout.fragment_returning) {
 
@@ -38,7 +39,11 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
                 args.putString(SingleActivity.LOGIN, login.text.toString())
                 args.putBoolean(SingleActivity.GENDER, (toggle.checkedButtonId == R.id.btn_man))
 
-                findNavController().navigate(R.id.action_screen_register_return_start, args)
+                val action = ReturningFragmentDirections.actionScreenRegisterReturnStart(
+                    ACCOUNT = Account(login.text.toString(), (toggle.checkedButtonId == R.id.btn_man)),
+                    LOGIN = login.text.toString(),
+                    GENDER = (toggle.checkedButtonId == R.id.btn_man))
+                findNavController().navigate(action)
             } else {
                 debugging("Click from returning, but without some params")
 

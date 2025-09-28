@@ -22,11 +22,18 @@
 
         <argument
             android:name="LOGIN"
+            android:defaultValue="@null"
             app:argType="string"
-            android:defaultValue="@null"/>
+            app:nullable="true"/>
         <argument
             android:name="GENDER"
+            android:defaultValue="false"
             app:argType="boolean"/>
+        <argument
+            android:name="ACCOUNT"
+            android:defaultValue="@null"
+            app:argType="com.mobile.vedroid.kt.model.Account"
+            app:nullable="true"/>
 
     </fragment>
 

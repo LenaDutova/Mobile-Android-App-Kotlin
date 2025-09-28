@@ -6,9 +6,11 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.SingleActivity
 import com.mobile.vedroid.kt.extensions.debugging
+import com.mobile.vedroid.kt.model.Account
 
 class StartFragment : Fragment(R.layout.fragment_start) {
 
@@ -32,9 +34,27 @@ class StartFragment : Fragment(R.layout.fragment_start) {
             findNavController().navigate(R.id.action_screen_start_to_register)
         }
 
-        if (arguments != null && !arguments?.getString(SingleActivity.Companion.LOGIN).isNullOrEmpty()){
-            showGreeting(requireArguments())
-        }
+        val args: StartFragmentArgs by navArgs()
+        if (args.ACCOUNT != null) showGreeting(args.ACCOUNT!!)
+        // if (!args.LOGIN.isNullOrBlank()) showGreeting(args.GENDER, args.LOGIN!!)
+    }
+
+    private fun showGreeting(user : Account) {
+        var txt : String? = getString(R.string.text_greeting) + " "
+        txt += if (user.gender) getString(R.string.text_mr) else getString(R.string.text_mrs)
+        txt += " " + user.login + "!"
+        debugging("Greeting: $txt")
+
+        greeting.text = txt
+    }
+
+    private fun showGreeting(gender : Boolean, login: String){
+        var txt : String? = getString(R.string.text_greeting) + " "
+        txt += if (gender) getString(R.string.text_mr) else getString(R.string.text_mrs)
+        txt += " $login!"
+        debugging("Greeting: $txt")
+
+        greeting.text = txt
     }
 
     private fun showGreeting(bundle: Bundle){
