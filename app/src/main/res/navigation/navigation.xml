@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
     app:startDestination="@+id/screen_start">
 
     <fragment
@@ -12,7 +13,9 @@
 
         <action
             android:id="@+id/action_screen_start_to_register"
-            app:destination="@id/screen_register"/>
+            app:destination="@id/screen_register"
+
+            app:popUpTo="@+id/screen_start" />
         <action
             android:id="@+id/action_screen_start_to_final"
             app:destination="@id/screen_final"/>
@@ -34,7 +37,9 @@
 
         <action
             android:id="@+id/action_screen_register_return_start"
-            app:destination="@id/screen_start"/>
+            app:destination="@id/screen_start"
+
+            />
 
     </fragment>
 

@@ -10,9 +10,3 @@
     android:id="@+id/main"
     android:name="androidx.navigation.fragment.NavHostFragment"
     app:navGraph="@navigation/navigation" />
-
-<!--
-app:defaultNavHost="true"
-android:id="@+id/main"
-tools:context=".SingleActivity"
--->
