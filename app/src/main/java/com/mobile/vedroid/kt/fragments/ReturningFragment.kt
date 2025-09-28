@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import com.google.android.material.button.MaterialButtonToggleGroup
 import com.google.android.material.textfield.TextInputEditText
 import com.mobile.vedroid.kt.R
@@ -25,9 +24,9 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
 
         val btnStart : Button = view.findViewById(R.id.btn_to_start)
         btnStart.setOnClickListener {
-            debugging("Click from returning")
-
             if (!login.text.isNullOrBlank() && toggle.checkedButtonId != R.id.btn_not_defined) {
+                debugging("Click from returning with registration data")
+
                 val args = Bundle()
                 args.putString(SingleActivity.LOGIN, login.text.toString())
                 args.putBoolean(SingleActivity.GENDER, (toggle.checkedButtonId == R.id.btn_man))
@@ -35,6 +34,8 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
                 parentFragmentManager.setFragmentResult(SingleActivity.REGISTER, args)
                 parentFragmentManager.popBackStack()
             } else {
+                debugging("Click from returning, but without some params")
+
                 if (login.text.isNullOrBlank()) (activity as SingleActivity).showSnackBar("Enter name")
                 if (toggle.checkedButtonId == R.id.btn_not_defined) (activity as SingleActivity).showToast("Choose gender")
             }

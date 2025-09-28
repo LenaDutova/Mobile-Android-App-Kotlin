@@ -13,4 +13,10 @@
     <string name="toggle_woman">Женщина</string>
 
     <string name="text_no_data">Нет данных</string>
+
+    <string name="text_greeting">"Добро пожаловать,"</string>
+    <string name="text_greeting_anonymous">"Добро пожаловать, Пользователь!"</string>
+
+    <string name="text_mr">"Уважаемый"</string>
+    <string name="text_mrs">"Уважаемая"</string>
 </resources>

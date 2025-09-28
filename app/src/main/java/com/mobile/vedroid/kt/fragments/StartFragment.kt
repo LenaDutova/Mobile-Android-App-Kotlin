@@ -5,10 +5,9 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.add
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
-import androidx.fragment.app.setFragmentResultListener
-import com.google.android.material.textfield.TextInputEditText
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.SingleActivity
 import com.mobile.vedroid.kt.extensions.debugging
@@ -27,7 +26,7 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         btnFinal.setOnClickListener {
             debugging("Click to final")
             parentFragmentManager.commit {
-                replace<FinalFragment>(R.id.main)
+                replace<FinalFragment>(R.id.main)    // Kill this fragment and open new
             }
         }
 
@@ -35,28 +34,22 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         btnReturning.setOnClickListener {
             debugging("Click to returning")
             parentFragmentManager.commit {
-                replace(R.id.main, ReturningFragment::class.java, null)
+                add<ReturningFragment>(R.id.main)   // Show new fragment on top of this (need background)
                 addToBackStack("start")
             }
             parentFragmentManager.setFragmentResultListener(SingleActivity.REGISTER, this) { key, bundle ->
                 debugging("Listen results")
-
-                var txt : String? = "Welcome, "
-                txt += if (bundle.getBoolean(SingleActivity.Companion.GENDER, false)) "Mr. " else "Mrs. "
-                txt += bundle.getString(SingleActivity.Companion.LOGIN) + "!"
-                debugging(txt)
-
-                greeting.text = txt
+                showGreeting(bundle);
             }
         }
+    }
 
-//        if (arguments != null && requireArguments().containsKey(SingleActivity.Companion.LOGIN)){
-//            var txt : String? = "Welcome, "
-//            txt += if (requireArguments().getBoolean(SingleActivity.Companion.GENDER, false)) "Mr. " else "Mrs. "
-//            txt += requireArguments().getString(SingleActivity.Companion.LOGIN) + "!"
-//
-//            val greeting : TextView = view.findViewById(R.id.tv_greeting)
-//            greeting.text = txt
-//        }
+    private fun showGreeting(bundle: Bundle){
+        var txt : String? = getString(R.string.text_greeting) + " "
+        txt += if (bundle.getBoolean(SingleActivity.Companion.GENDER, false)) getString(R.string.text_mr) else getString(R.string.text_mrs)
+        txt += " " + bundle.getString(SingleActivity.Companion.LOGIN) + "!"
+        debugging("Greeting: $txt")
+
+        greeting.text = txt
     }
 }
