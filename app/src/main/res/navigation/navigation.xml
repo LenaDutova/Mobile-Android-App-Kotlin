@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/screen_start">
+
+    <fragment
+        android:id="@+id/screen_start"
+        android:name="com.mobile.vedroid.kt.fragments.StartFragment"
+        tools:layout="@layout/fragment_start">
+
+        <action
+            android:id="@+id/action_screen_start_to_register"
+            app:destination="@id/screen_register"/>
+        <action
+            android:id="@+id/action_screen_start_to_final"
+            app:destination="@id/screen_final"/>
+
+        <argument
+            android:name="LOGIN"
+            app:argType="string"
+            android:defaultValue="@null"/>
+        <argument
+            android:name="GENDER"
+            app:argType="boolean"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/screen_register"
+        android:name="com.mobile.vedroid.kt.fragments.ReturningFragment"
+        tools:layout="@layout/fragment_returning">
+
+        <action
+            android:id="@+id/action_screen_register_return_start"
+            app:destination="@id/screen_start"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/screen_final"
+        android:name="com.mobile.vedroid.kt.fragments.FinalFragment"
+        tools:layout="@layout/fragment_final">
+    </fragment>
+
+</navigation>

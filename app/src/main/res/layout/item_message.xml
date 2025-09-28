@@ -9,7 +9,7 @@
     android:layout_margin="@dimen/small"
 
     app:cardCornerRadius="@dimen/normal"
-    app:cardBackgroundColor="?attr/colorPrimaryContainer">
+    app:cardBackgroundColor="?attr/colorTertiary">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,13 +21,13 @@
             android:layout_width="@dimen/tall"
             android:layout_height="@dimen/tall"
             android:background="@drawable/android"
-            android:backgroundTint="?attr/colorOnPrimaryContainer"/>
+            android:backgroundTint="?attr/colorOnTertiary"/>
 
         <TextView
             android:id="@+id/item_message_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnPrimaryContainer"
+            android:textColor="?attr/colorOnTertiary"
             android:text="@string/lorem_ipsum"/>
 
     </LinearLayout>
