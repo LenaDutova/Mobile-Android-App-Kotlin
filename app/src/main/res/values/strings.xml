@@ -14,4 +14,10 @@
     <string name="toggle_woman">Woman</string>
 
     <string name="text_no_data">No data</string>
+
+    <string name="text_greeting">Welcome,</string>
+    <string name="text_greeting_anonymous">Welcome, Anonymous!</string>
+
+    <string name="text_mr">Mr.</string>
+    <string name="text_mrs">Mrs.</string>
 </resources>

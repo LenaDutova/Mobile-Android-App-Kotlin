@@ -6,7 +6,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorTertiary"
+    android:background="?attr/colorTertiaryContainer"
 
     tools:context=".fragments.FinalFragment">
 
@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
 
         tools:listitem="@layout/item_message"
-        tools:visibility="gone"
+        tools:visibility="visible"
         />
 
 </FrameLayout>
