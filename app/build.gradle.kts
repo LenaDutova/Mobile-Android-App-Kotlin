@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("androidx.navigation.safeargs.kotlin")
+    id("androidx.navigation.safeargs.kotlin") // add safe args in navigation with navGraph
 }
 
 android {
@@ -27,10 +27,16 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        viewBinding = true  // add view binding instead of using findViewById()
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }

@@ -5,34 +5,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.vedroid.kt.R
+import com.mobile.vedroid.kt.databinding.FragmentFinalBinding
+import com.mobile.vedroid.kt.databinding.ItemMessageBinding
 import com.mobile.vedroid.kt.extensions.debugging
 
 class FinalFragment : Fragment (R.layout.fragment_final) {
 
-    lateinit var placeholder: TextView
-    lateinit var recyclerView : RecyclerView
+    private var _binding: FragmentFinalBinding? = null
+    private val binding: FragmentFinalBinding
+            get() = _binding ?: throw RuntimeException()
+
     lateinit var messageAdapter : MessageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         debugging("HI")
 
-        recyclerView = view.findViewById(R.id.rv_messages)
-        recyclerView.layoutManager = LinearLayoutManager(view.context)  // Default orientation - vertical
+        _binding = FragmentFinalBinding.bind(view)
 
         messageAdapter = MessageAdapter(getMockMessages())  // Create and add data adapter
-        recyclerView.adapter = messageAdapter
-//        recyclerView.scrollToPosition(0)    // As default, scroll to beginning
-        recyclerView.scrollToPosition(messageAdapter.getItemCount() - 1)    // Scroll to last
+        binding.messagesRecyclerView.layoutManager = LinearLayoutManager(view.context)  // Default orientation - vertical
+        binding.messagesRecyclerView.adapter = messageAdapter
+        binding.messagesRecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1)    // Scroll to last
 
-        placeholder = view.findViewById<TextView>(R.id.rv_placeholder)
         if (messageAdapter.itemCount > 0){  // hide alert if has data
-            placeholder.visibility = View.GONE
+            binding.messagesPlaceholder.visibility = View.GONE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     /**
@@ -55,21 +61,22 @@ class FinalFragment : Fragment (R.layout.fragment_final) {
 
     class MessageAdapter (var messages: List<String> = listOf()) : RecyclerView.Adapter<MessageAdapter.ViewHolder>(){
 
-        class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            // Find views on layout
-            val message: TextView = view.findViewById(R.id.item_message_text)
+        class ViewHolder(val binding: ItemMessageBinding) : RecyclerView.ViewHolder(binding.root) {
+            fun bindItem(item: String){
+                binding.itemMessageText.text = item
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            // Specify layout for items
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_message, parent, false)
-            return ViewHolder(view)
+            val binding = ItemMessageBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false)
+            return ViewHolder(binding)
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            // Show data from position item on layout views
-            holder.message.text = messages.get(position)
+            holder.bindItem(messages.get(position))
         }
 
         override fun getItemCount(): Int = messages.size

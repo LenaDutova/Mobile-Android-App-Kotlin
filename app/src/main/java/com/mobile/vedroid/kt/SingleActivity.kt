@@ -11,26 +11,20 @@ import com.mobile.vedroid.kt.extensions.debugging
 
 class SingleActivity : AppCompatActivity (R.layout.activity) {
 
-    companion object {
-        const val LOGIN : String = "LOGIN"
-        const val GENDER : String = "GENDER"
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        debugging("HI")
 
         enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.nav_host_fragment)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        debugging("HI")
     }
 
     fun showSnackBar (message : String ){
-        Snackbar.make(findViewById(R.id.main), message, Snackbar.LENGTH_LONG).show()
+        Snackbar.make(findViewById(R.id.nav_host_fragment), message, Snackbar.LENGTH_LONG).show()
     }
 
     fun showToast (message : String ){

@@ -6,50 +6,54 @@ import android.widget.Button
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButtonToggleGroup
-import com.google.android.material.textfield.TextInputEditText
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.SingleActivity
+import com.mobile.vedroid.kt.databinding.FragmentReturningBinding
 import com.mobile.vedroid.kt.extensions.debugging
 import com.mobile.vedroid.kt.model.Account
 
 class ReturningFragment : Fragment(R.layout.fragment_returning) {
 
-    lateinit var login : TextInputEditText
-    lateinit var toggle : MaterialButtonToggleGroup
+    private var _binding: FragmentReturningBinding? = null
+    private val binding: FragmentReturningBinding
+        get() = _binding ?: throw RuntimeException()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         debugging("HI")
 
-        login = view.findViewById(R.id.login)
-        toggle = view.findViewById(R.id.toggle_button)
+        _binding = FragmentReturningBinding.bind(view)
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             debugging("Back stack click")
-            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         val btnStart : Button = view.findViewById(R.id.btn_to_start)
         btnStart.setOnClickListener {
-            if (!login.text.isNullOrBlank() && toggle.checkedButtonId != R.id.btn_not_defined) {
+            if (!binding.registrationLogin.text.isNullOrBlank()
+                && binding.registrationGenderToggle.checkedButtonId != R.id.btn_not_defined) {
                 debugging("Click from returning with registration data")
 
-                val args = Bundle()
-                args.putString(SingleActivity.LOGIN, login.text.toString())
-                args.putBoolean(SingleActivity.GENDER, (toggle.checkedButtonId == R.id.btn_man))
-
                 val action = ReturningFragmentDirections.actionScreenRegisterReturnStart(
-                    ACCOUNT = Account(login.text.toString(), (toggle.checkedButtonId == R.id.btn_man)),
-                    LOGIN = login.text.toString(),
-                    GENDER = (toggle.checkedButtonId == R.id.btn_man))
+                    ACCOUNT = Account(
+                        binding.registrationLogin.text.toString(),
+                        binding.registrationGenderToggle.checkedButtonId == R.id.btn_man),
+                    LOGIN = binding.registrationLogin.text.toString(),
+                    GENDER = (binding.registrationGenderToggle.checkedButtonId == R.id.btn_man))
+
                 findNavController().navigate(action)
             } else {
                 debugging("Click from returning, but without some params")
 
-                if (login.text.isNullOrBlank()) (activity as SingleActivity).showSnackBar("Enter name")
-                if (toggle.checkedButtonId == R.id.btn_not_defined) (activity as SingleActivity).showToast("Choose gender")
+                if (binding.registrationLogin.text.isNullOrBlank()) (activity as SingleActivity).showSnackBar("Enter name")
+                if (binding.registrationGenderToggle.checkedButtonId == R.id.btn_not_defined) (activity as SingleActivity).showToast("Choose gender")
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
