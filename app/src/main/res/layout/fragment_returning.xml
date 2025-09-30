@@ -7,11 +7,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:id="@+id/main"
     tools:context=".fragments.ReturningFragment">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggle_button"
+        android:id="@+id/registration_gender_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:singleSelection="true"
@@ -57,11 +56,11 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/toggle_button"
+        app:layout_constraintBottom_toTopOf="@id/registration_gender_toggle"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login"
+            android:id="@+id/registration_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             />
@@ -78,7 +77,7 @@
         style="?attr/materialButtonStyle"
         android:text="@string/btn_register"
 
-        app:layout_constraintTop_toBottomOf="@+id/toggle_button"
+        app:layout_constraintTop_toBottomOf="@+id/registration_gender_toggle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
