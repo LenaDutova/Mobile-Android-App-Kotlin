@@ -29,7 +29,7 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
             findNavController().popBackStack()
         }
 
-        val btnStart : Button = view.findViewById(R.id.btn_to_start)
+        val btnStart : Button = binding.btnToStart
         btnStart.setOnClickListener {
             if (!binding.registrationLogin.text.isNullOrBlank()
                 && binding.registrationGenderToggle.checkedButtonId != R.id.btn_not_defined) {
