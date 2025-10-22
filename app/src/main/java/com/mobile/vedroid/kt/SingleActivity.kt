@@ -7,16 +7,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
-import com.mobile.vedroid.kt.extensions.debugging
+import com.mobile.vedroid.kt.databinding.ActivityBinding
 
-class SingleActivity : AppCompatActivity (R.layout.activity) {
+class SingleActivity : AppCompatActivity (/*R.layout.activity*/) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        debugging("HI")
+        val binding = ActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.nav_host_fragment)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.navHostFragment) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
