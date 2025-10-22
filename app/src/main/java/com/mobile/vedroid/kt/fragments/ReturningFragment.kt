@@ -46,8 +46,12 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
             } else {
                 debugging("Click from returning, but without some params")
 
-                if (binding.registrationLogin.text.isNullOrBlank()) (activity as SingleActivity).showSnackBar("Enter name")
-                if (binding.registrationGenderToggle.checkedButtonId == R.id.btn_not_defined) (activity as SingleActivity).showToast("Choose gender")
+                var warning: String = getString(R.string.text_please)
+                if (binding.registrationLogin.text.isNullOrBlank()) warning += getString(R.string.text_no_name)
+                if (binding.registrationGenderToggle.checkedButtonId == R.id.btn_not_defined)
+                    warning += getString(R.string.text_no_gender)
+
+                (activity as SingleActivity).showSnackBar(warning)
             }
         }
     }
