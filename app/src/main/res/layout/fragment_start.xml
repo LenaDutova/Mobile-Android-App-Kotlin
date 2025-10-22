@@ -9,6 +9,17 @@
 
     tools:context=".fragments.StartFragment">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/kotlin"
+        android:scaleType="fitStart"
+
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+
+        tools:viewBindingIgnore="true" />
+
     <TextView
         android:id="@+id/greeting_text"
 
