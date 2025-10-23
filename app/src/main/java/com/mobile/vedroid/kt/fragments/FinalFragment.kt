@@ -90,7 +90,7 @@ class FinalFragment : Fragment () {
             } catch (e: Exception){
                 debugging("Some error: ${e.message}")
 
-                (activity as SingleActivity).showSnackBar(getString(R.string.no_internet))
+                (activity as SingleActivity).showSnackBar(getString(R.string.text_no_internet))
             }
 
             binding.swipeToRefresh.isRefreshing = false
