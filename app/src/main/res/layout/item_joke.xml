@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/small"
+
+    app:cardCornerRadius="@dimen/normal"
+    app:cardBackgroundColor="?attr/colorTertiary">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/small">
+
+        <TextView
+            android:id="@+id/item_twopart_joke_setup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+
+            android:paddingBottom="@dimen/small"
+            android:text="@string/lorem_ipsum"
+            android:textColor="?attr/colorOnTertiary"
+            android:textStyle="bold"
+
+            tools:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/smile"
+            android:layout_width="@dimen/tall"
+            android:layout_height="@dimen/tall"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/item_twopart_joke_setup"
+
+            android:background="@drawable/smile"
+            android:backgroundTint="?attr/colorOnTertiary"/>
+
+        <TextView
+            android:id="@+id/item_twopart_joke_delivery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toEndOf="@id/smile"
+            app:layout_constraintTop_toBottomOf="@id/item_twopart_joke_setup"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:paddingStart="@dimen/small"
+            android:text="@string/lorem_ipsum"
+            android:textColor="?attr/colorOnTertiary"
+            android:textStyle="italic"
+
+            tools:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/item_single_joke_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toEndOf="@id/smile"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+
+            android:paddingStart="@dimen/small"
+            android:text="@string/lorem_ipsum"
+            android:textColor="?attr/colorOnTertiary"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

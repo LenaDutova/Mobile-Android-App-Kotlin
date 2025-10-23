@@ -22,13 +22,19 @@
         android:text="@string/text_no_data"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/messages_recycler_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_to_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
 
-        tools:listitem="@layout/item_message"
-        tools:visibility="visible"
-        />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/messages_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            tools:listitem="@layout/item_joke"
+            tools:visibility="visible"
+            />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </FrameLayout>

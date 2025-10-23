@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin") // add safe args in navigation with navGraph
+    alias(libs.plugins.kotlin.serialization) // add Json serialization in Ktor
 }
 
 android {
@@ -53,13 +54,24 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.swiperefreshlayout)
 
-    // // to use fragments
+    // to use fragments
     implementation(libs.androidx.fragment)
 
     // to use navGraph
     implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.navigation.ui)
+
+    // Ktor (base)
+    implementation(libs.ktor.client.core)
+    // Ktor client to Android
+    implementation(libs.ktor.client.android)
+    // Json serialization in Ktor
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.content.negotiation)
+    implementation(libs.ktor.serialization.kotlinx.json)
+
 
     // tests
     testImplementation(libs.junit)

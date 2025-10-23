@@ -18,6 +18,8 @@
     <string name="text_mrs">"Уважаемая"</string>
 
     <string name="text_no_data">Нет данных</string>
+    <string name="text_no_internet">Нет интернет соединения</string>
+
     <string name="text_please">Пожалуйста</string>
     <string name="text_no_name">, укажите имя</string>
     <string name="text_no_gender">, выберите пол</string>

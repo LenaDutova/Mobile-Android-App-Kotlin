@@ -1,7 +1,9 @@
 package com.mobile.vedroid.kt.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
@@ -12,17 +14,21 @@ import com.mobile.vedroid.kt.databinding.FragmentReturningBinding
 import com.mobile.vedroid.kt.extensions.debugging
 import com.mobile.vedroid.kt.model.Account
 
-class ReturningFragment : Fragment(R.layout.fragment_returning) {
+class ReturningFragment : Fragment() {
 
     private var _binding: FragmentReturningBinding? = null
     private val binding: FragmentReturningBinding
         get() = _binding ?: throw RuntimeException()
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        _binding = FragmentReturningBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         debugging("HI")
-
-        _binding = FragmentReturningBinding.bind(view)
 
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             debugging("Back stack click")

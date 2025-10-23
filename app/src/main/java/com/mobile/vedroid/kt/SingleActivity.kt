@@ -9,7 +9,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import com.mobile.vedroid.kt.databinding.ActivityBinding
 
-class SingleActivity : AppCompatActivity (/*R.layout.activity*/) {
+class SingleActivity : AppCompatActivity () {
     private lateinit var binding: ActivityBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

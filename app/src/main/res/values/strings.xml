@@ -19,6 +19,8 @@
     <string name="text_mrs">Mrs.</string>
 
     <string name="text_no_data">No data</string>
+    <string name="text_no_internet">No internet connection</string>
+
     <string name="text_please">Please</string>
     <string name="text_no_name">, enter name</string>
     <string name="text_no_gender">, choose gender</string>
