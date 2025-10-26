@@ -20,8 +20,6 @@ import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.HttpMethod
 import io.ktor.http.URLProtocol
-import io.ktor.http.appendPathSegments
-import io.ktor.http.encodedPath
 import io.ktor.http.path
 import io.ktor.serialization.kotlinx.json.json
 
@@ -86,7 +84,7 @@ object ApiKtorClient : ApiJokeService {
             }
 
             Log.d("TAG_ApiKtorClient", "loading in ${Thread.currentThread().name} request $response")
-//            Log.d("TAG_ApiKtorClient", "data ${response.bodyAsText()}")
+            Log.d("TAG_ApiKtorClient", "data ${response.bodyAsText()}")
 
             (response.body() as ApiJokesList).jokes
         }
