@@ -9,6 +9,8 @@ import io.ktor.client.plugins.HttpRequestRetry
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.get
+import io.ktor.client.request.host
+import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.URLProtocol
@@ -26,33 +28,17 @@ interface DenoJokeService: KtorService  {
     suspend fun getJokes(count: Int): List<DenoJoke>
 }
 
-public object DenoKtorClient: DenoJokeService {
+object DenoKtorClient: DenoJokeService {
 
     private val client: HttpClient by lazy {
         HttpClient(Android){
-            defaultRequest {
-                url("https://joke.deno.dev/")
-            }
-
             // to read json
             install(ContentNegotiation) {
                 json(Json {
-                    prettyPrint = true
                     isLenient = true
+                    prettyPrint = true
                 })
             }
-
-            install(HttpRequestRetry) {
-                retryOnServerErrors(maxRetries = 3)
-                exponentialDelay()
-//                retryOnExceptionIf { request, cause ->
-//                    cause is NetworkError
-//                }
-            }
-//            install(Logging) {
-//                logger = Logger.DEFAULT
-//                level = LogLevel.HEADERS
-//            }
         }
     }
 
@@ -62,19 +48,18 @@ public object DenoKtorClient: DenoJokeService {
 
 
     override suspend fun getJokes(): List<DenoJoke> {
-        val response: HttpResponse = client.get {
+        val response: HttpResponse = client.get { // client.get("type/programming/5")
             url {
                 protocol = URLProtocol.HTTPS
-                path("type/programming/10")
+                host = "joke.deno.dev"
+                path("type", "programming", "5")
             }
         }
 
-//            client.get("type/programming/10")
+        Log.d ("TAG_DenoJokeService", "loading in ${Thread.currentThread().name} request $response")
+        Log.d ("TAG_DenoJokeService", "data ${response.bodyAsText()}")
 
-        Log.d ("TAG_DenoJokeService", "request ${response}")
-        Log.d ("TAG_DenoJokeService", "date ${response.bodyAsText()}")
-
-        return response.body()
+        return response.body<List<DenoJoke>>()
     }
 
     override suspend fun getJokes(count: Int): List<DenoJoke> {

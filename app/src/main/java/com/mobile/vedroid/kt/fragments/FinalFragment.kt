@@ -15,16 +15,18 @@ import com.mobile.vedroid.kt.adapter.DenoJokesAdapter
 import com.mobile.vedroid.kt.adapter.ExpandableAdapter
 import com.mobile.vedroid.kt.databinding.FragmentFinalBinding
 import com.mobile.vedroid.kt.extensions.debugging
+import com.mobile.vedroid.kt.model.ApiJoke
 import com.mobile.vedroid.kt.model.DenoJoke
-import com.mobile.vedroid.kt.network.DenoJokeService
+import com.mobile.vedroid.kt.network.ApiKtorClient
 import com.mobile.vedroid.kt.network.DenoKtorClient
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class FinalFragment : Fragment () {
 
     companion object{
-        const val DENO_OR_API_JOKES : Boolean = true
+        const val DENO_OR_API_JOKES : Boolean = false
     }
 
     private var _binding: FragmentFinalBinding? = null
@@ -61,7 +63,7 @@ class FinalFragment : Fragment () {
         _binding = null
 
         if (DENO_OR_API_JOKES) DenoKtorClient.close()
-//        else ApiKtorClient.close() todo
+        else ApiKtorClient.close()
     }
 
 
@@ -74,30 +76,42 @@ class FinalFragment : Fragment () {
 
         if (DENO_OR_API_JOKES) loadDenoJokes()
         else loadApiJokes()
-
-        checkPlaceholder()
     }
 
     private fun loadDenoJokes(){
-        lifecycleScope.launch {
+        lifecycleScope.launch (Dispatchers.IO) {
             try {
                 val list = DenoKtorClient.getJokes()
-                val count: Int = (jokeAdapter as ExpandableAdapter<DenoJoke>).addItems(list)
-
-                debugging("loading $count jokes")
-
-                checkPlaceholder()
+                launch(Dispatchers.Main){
+                    val count = (jokeAdapter as ExpandableAdapter<DenoJoke>).addItems(list)
+                    binding.swipeToRefresh.isRefreshing = false
+                    checkPlaceholder()
+                    debugging("show in ${Thread.currentThread().name} $count jokes")
+                }
             } catch (e: Exception){
                 debugging("Some error: ${e.message}")
-
-                (activity as SingleActivity).showSnackBar(getString(R.string.text_no_internet))
+                launch(Dispatchers.Main) {
+                    binding.swipeToRefresh.isRefreshing = false
+                    (activity as SingleActivity).showSnackBar(getString(R.string.text_no_internet))
+                }
             }
-
-            binding.swipeToRefresh.isRefreshing = false
         }
     }
 
     private fun  loadApiJokes(){
+        lifecycleScope.launch{
+            try {
+                val list = ApiKtorClient.getJokes()
+                val count = (jokeAdapter as ExpandableAdapter<ApiJoke>).addItems(list)
+                binding.swipeToRefresh.isRefreshing = false
+                checkPlaceholder()
+                debugging("show in ${Thread.currentThread().name} $count jokes")
+            } catch (e: Exception){
+                debugging("Some error: ${e.message}")
+                binding.swipeToRefresh.isRefreshing = false
+                (activity as SingleActivity).showSnackBar(getString(R.string.text_no_internet))
+            }
+        }
 
     }
 }
