@@ -83,21 +83,37 @@ private val client: HttpClient by lazy {}
 
 Данный клиент должен реализовать описанный ранее интерфейс. В случае Ktor-клиента каждый запрос требует индивидуальной настройки: пути, параметров запроса, заголовков запроса (по требованию):
 ```
-override suspend fun getJokes(): List<ApiJoke> {
-    return withContext(Dispatchers.IO) {
-        val response: HttpResponse = client.request { // client.get ("Programming?amount=5")
-            method = HttpMethod.Get
-            url {
-                path("Programming")
-                parameter("amount", 5)
-            }
+val response: HttpResponse = client.request { // client.get ("Programming?amount=5")
+    method = HttpMethod.Get
+    url {
+        path("Programming")
+        parameter("amount", 5)
+    }
+}
+return response.body()
+```
+
+Имейте ввиду, что при сетевом взаимодействии может возникнуть множество ошибок: остутсвие интернет-соединение, неполадки хост-сервера, ошибки при сериализации json-объектов. Используйте механизмы предварительного логирования данных, чтобы убедиться, что вы верно сконфигурировали запрос и отобразить полученные данные. Например:
+```
+Log.d("TAG", "loading in ${Thread.currentThread().name} request $response")
+Log.d("TAG", "data ${response.bodyAsText()}")
+```
+
+## Осуществление запроса
+Стоит иметь в виду, что "тяжеловесные" задачи, такие как обращение к базе данных, чтение/запись в файл и сетевое взаимодействие, следует выносить из главного UI-потока исполнения, т.к. они могут привести к зависанию интерфейса пользователя. Для решения этой проблемы стоит использовать механизм переключения сопрограмм.
+
+На объекте клиента можно вызвать методы, описанные в контракте:
+```
+lifecycleScope.launch (Dispatchers.IO) {
+    try {
+        val list = client.getJokes()
+        launch(Dispatchers.Main){
+            for (JokeModel joke: list) Log.d ("TAG", joke.toString());
         }
-
-        Log.d("TAG_ApiKtorClient", "loading in ${Thread.currentThread().name} request $response")
-        Log.d("TAG_ApiKtorClient", "data ${response.bodyAsText()}")
-
-        (response.body() as ApiJokesList).jokes
+    } catch (e: Exception){
+        launch(Dispatchers.Main) {
+            Log.e ("TAG", a.message")
+        }
     }
 }
 ```
-
