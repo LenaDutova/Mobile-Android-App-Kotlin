@@ -25,9 +25,9 @@ class StartActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_start)
-
         enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
+
+        setContentView(R.layout.activity_start)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -82,8 +82,9 @@ class StartActivity : AppCompatActivity() {
 
     private fun useResult(data: Intent?) : Unit {
         if (data != null && data.hasExtra(LOGIN)){
+
             var txt : String? = "Welcome, "
-            txt += if (data.getBooleanExtra(GENDER, false)) "Mr." else "Mrs."
+            txt += if (data.getBooleanExtra(GENDER, false)) "Mr. " else "Mrs. "
             txt += data.getStringExtra(LOGIN) + "!"
 
             val greeting : TextView = findViewById(R.id.tv_greeting)
