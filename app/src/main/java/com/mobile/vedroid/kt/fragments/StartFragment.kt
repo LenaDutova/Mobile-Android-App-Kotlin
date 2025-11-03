@@ -12,7 +12,7 @@ import com.mobile.vedroid.kt.extensions.debugging
 class StartFragment : Fragment(R.layout.fragment_start) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         activity?.debugging("HI")
 
         val btnFinal : Button = view.findViewById(R.id.btn_to_final)
@@ -28,9 +28,14 @@ class StartFragment : Fragment(R.layout.fragment_start) {
         }
 
         if (arguments != null && requireArguments().containsKey(SingleActivity.Companion.LOGIN)){
-            var txt : String? = "Welcome, "
-            txt += if (requireArguments().getBoolean(SingleActivity.Companion.GENDER, false)) "Mr. " else "Mrs. "
-            txt += requireArguments().getString(SingleActivity.Companion.LOGIN) + "!"
+            val txt = buildString {
+                append("Welcome,")
+                append(' ')
+                append(if (requireArguments().getBoolean(SingleActivity.Companion.GENDER, false)) "Mr." else "Mrs.")
+                append(' ')
+                append(requireArguments().getString(SingleActivity.Companion.LOGIN))
+                append('!')
+            }
 
             val greeting : TextView = view.findViewById(R.id.tv_greeting)
             greeting.text = txt
