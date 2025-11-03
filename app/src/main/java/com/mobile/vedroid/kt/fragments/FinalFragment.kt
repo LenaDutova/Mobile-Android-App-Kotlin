@@ -18,7 +18,7 @@ class FinalFragment : Fragment (R.layout.fragment_final) {
     lateinit var messageAdapter : MessageAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         debugging("HI")
 
         recyclerView = view.findViewById(R.id.rv_messages)

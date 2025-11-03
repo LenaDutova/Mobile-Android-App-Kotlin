@@ -17,7 +17,7 @@ class StartFragment : Fragment(R.layout.fragment_start) {
     lateinit var greeting : TextView
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         debugging("HI")
 
         greeting = view.findViewById(R.id.tv_greeting)
@@ -45,11 +45,16 @@ class StartFragment : Fragment(R.layout.fragment_start) {
     }
 
     private fun showGreeting(bundle: Bundle){
-        var txt : String? = getString(R.string.text_greeting) + " "
-        txt += if (bundle.getBoolean(SingleActivity.Companion.GENDER, false)) getString(R.string.text_mr) else getString(R.string.text_mrs)
-        txt += " " + bundle.getString(SingleActivity.Companion.LOGIN) + "!"
-        debugging("Greeting: $txt")
+        val txt = buildString {
+            append(getString(R.string.text_greeting))
+            append(' ')
+            append(if (bundle.getBoolean(SingleActivity.Companion.GENDER, false)) getString(R.string.text_mr) else getString(R.string.text_mrs))
+            append(' ')
+            append(bundle.getString(SingleActivity.Companion.LOGIN))
+            append('!')
+        }
 
+        debugging("Greeting: $txt")
         greeting.text = txt
     }
 }

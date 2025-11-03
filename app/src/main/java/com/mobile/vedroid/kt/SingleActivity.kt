@@ -24,9 +24,9 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity) // in constructor now
-
         enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
+
+//        setContentView(R.layout.activity) // in constructor now
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -42,38 +42,6 @@ class SingleActivity : AppCompatActivity (R.layout.activity) {
 //            }
 //        }
     }
-
-//    fun navigate (jump : Int, args: Bundle? = null) : Unit {
-//        when (jump) {
-//            JUMP_TO_RETURNING -> {
-//                debugging("Open fragment to registration")
-//
-//                supportFragmentManager.commit {
-//                    replace(R.id.main, ReturningFragment::class.java, null)
-//                    setReorderingAllowed(true)  // optimizes the state changes
-//                    addToBackStack("start")
-//                }
-//            }
-//            JUMP_FROM_RETURNING -> {
-//                debugging("Return to start fragment with registration data")
-//
-//                supportFragmentManager.popBackStack()
-//                supportFragmentManager.commit {
-//                    replace(R.id.main, StartFragment::class.java, args)
-//                    setReorderingAllowed(true)  // optimizes the state changes
-//                }
-//            }
-//            JUMP_TO_FINAL -> {
-//                debugging("Open fragment with recycle view list")
-//
-//                supportFragmentManager.commit {
-//                    replace(R.id.main, FinalFragment::class.java, null)
-//                    setReorderingAllowed(true)  // optimizes the state changes
-//                }
-//            }
-//            else ->{debugging("Navigate Error")}
-//        }
-//    }
 
     fun showSnackBar (message : String ){
         Snackbar.make(findViewById(R.id.main), message, Snackbar.LENGTH_LONG).show()

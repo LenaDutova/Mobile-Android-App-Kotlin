@@ -16,7 +16,7 @@ class ReturningFragment : Fragment(R.layout.fragment_returning) {
     lateinit var toggle : MaterialButtonToggleGroup
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         debugging("HI")
 
         login = view.findViewById(R.id.login)
