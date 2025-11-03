@@ -15,8 +15,9 @@ import com.mobile.vedroid.kt.model.Account
 class StartFragment : Fragment() {
 
     private var _binding: FragmentStartBinding? = null
-    private val binding: FragmentStartBinding
-        get() = _binding ?: throw RuntimeException()
+    private val binding: FragmentStartBinding get() = _binding!!
+
+    private val args: StartFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
@@ -25,7 +26,7 @@ class StartFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         debugging("HI")
 
         binding.btnToFinal.setOnClickListener {
@@ -38,21 +39,27 @@ class StartFragment : Fragment() {
             findNavController().navigate(R.id.action_screen_start_to_register)
         }
 
-        val args: StartFragmentArgs by navArgs()
-        if (args.ACCOUNT != null) showGreeting(args.ACCOUNT!!)
+        args.ACCOUNT?.let { user -> showGreeting(user = user) }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
-    private fun showGreeting(user : Account) {
-        var txt : String? = getString(R.string.text_greeting) + " "
-        txt += if (user.gender) getString(R.string.text_mr) else getString(R.string.text_mrs)
-        txt += " " + user.login + "!"
-        debugging("Greeting: $txt")
 
+
+    private fun showGreeting(user : Account) {
+        val txt = buildString {
+            append(getString(R.string.text_greeting))
+            append(' ')
+            append(getString(if (user.gender) R.string.text_mr else R.string.text_mrs))
+            append(' ')
+            append(user.login)
+            append('!')
+        }
+
+        debugging("Greeting: $txt")
         binding.greetingText.text = txt
     }
 }

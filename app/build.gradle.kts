@@ -31,6 +31,7 @@ android {
 
     buildFeatures {
         viewBinding = true  // add view binding instead of using findViewById()
+        buildConfig = true
     }
 
     compileOptions {

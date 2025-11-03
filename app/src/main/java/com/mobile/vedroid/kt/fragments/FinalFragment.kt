@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,21 +20,23 @@ import com.mobile.vedroid.kt.model.ApiJoke
 import com.mobile.vedroid.kt.model.DenoJoke
 import com.mobile.vedroid.kt.network.ApiKtorClient
 import com.mobile.vedroid.kt.network.DenoKtorClient
+import com.mobile.vedroid.kt.network.JokeService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class FinalFragment : Fragment () {
 
-    companion object{
+    companion object {
         const val DENO_OR_API_JOKES : Boolean = false
     }
 
     private var _binding: FragmentFinalBinding? = null
-    private val binding: FragmentFinalBinding
-            get() = _binding ?: throw RuntimeException()
+    private val binding: FragmentFinalBinding get() = _binding!!
 
-    lateinit var jokeAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>
+    private var _jokeAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = null
+    private val jokeAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder> get() = _jokeAdapter!!
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFinalBinding.inflate(inflater, container, false)
@@ -45,11 +48,13 @@ class FinalFragment : Fragment () {
         super.onCreate(savedInstanceState)
         debugging("HI")
 
-        jokeAdapter = (if (DENO_OR_API_JOKES) DenoJokesAdapter() else ApiJokesAdapter()) as RecyclerView.Adapter<RecyclerView.ViewHolder>
+        _jokeAdapter = (
+                if (DENO_OR_API_JOKES) DenoJokesAdapter()
+                else ApiJokesAdapter()
+                ) as RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         binding.messagesRecyclerView.layoutManager = LinearLayoutManager(view.context)  // Default orientation - vertical
         binding.messagesRecyclerView.adapter = jokeAdapter
-
         loadJokes()
 
         binding.swipeToRefresh.setOnRefreshListener {
@@ -59,16 +64,17 @@ class FinalFragment : Fragment () {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+//        // only if this fragment is the only one place for internet loading/uploading
+//        if (DENO_OR_API_JOKES) DenoKtorClient.close()
+//        else ApiKtorClient.close()
 
-        if (DENO_OR_API_JOKES) DenoKtorClient.close()
-        else ApiKtorClient.close()
+        _binding = null
+        super.onDestroyView()
     }
 
 
     private fun checkPlaceholder(){
-        binding.messagesPlaceholder.visibility = if (jokeAdapter.itemCount != 0) View.GONE else View.VISIBLE
+        binding.messagesPlaceholder.isVisible = jokeAdapter.itemCount == 0
     }
 
     private fun loadJokes (){
@@ -100,16 +106,18 @@ class FinalFragment : Fragment () {
 
     private fun  loadApiJokes(){
         lifecycleScope.launch{
-            try {
-                val list = ApiKtorClient.getJokes()
-                val count = (jokeAdapter as ExpandableAdapter<ApiJoke>).addItems(list)
+            runCatching {
+                ApiKtorClient.getJokes()
+            }.onSuccess { jokes ->
+                val count = (jokeAdapter as ExpandableAdapter<ApiJoke>).addItems(jokes)
+
+                debugging("show in ${Thread.currentThread().name} $count jokes")
                 binding.swipeToRefresh.isRefreshing = false
                 checkPlaceholder()
-                debugging("show in ${Thread.currentThread().name} $count jokes")
-            } catch (e: Exception){
-                debugging("Some error: ${e.message}")
+            }.onFailure { throwable ->
+                debugging("Some error: ${throwable.message}")
                 binding.swipeToRefresh.isRefreshing = false
-                (activity as SingleActivity).showSnackBar(getString(R.string.text_no_internet))
+                (requireActivity() as SingleActivity).showSnackBar(getString(R.string.text_no_internet))
             }
         }
 

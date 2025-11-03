@@ -34,12 +34,7 @@ https://v2.jokeapi.dev/joke/Programming?amount=10
 https://v2.jokeapi.dev/joke/Programming?type=single&amount=10
 https://v2.jokeapi.dev/joke/Programming?type=twopart&amount=10
  */
-interface ApiJokeService : KtorService {
-    suspend fun getJokes(): List<ApiJoke>
-    suspend fun getJokes(count: Int): List<ApiJoke>
-}
-
-object ApiKtorClient : ApiJokeService {
+object ApiKtorClient : JokeService<ApiJoke> {
 
     private val client: HttpClient by lazy {
         HttpClient(Android){
@@ -73,6 +68,10 @@ object ApiKtorClient : ApiJokeService {
         }
     }
 
+    override fun close() {
+        client.close()
+    }
+
     override suspend fun getJokes(): List<ApiJoke> {
         return withContext(Dispatchers.IO) {
             val response: HttpResponse = client.request { // client.get ("Programming?amount=5")
@@ -96,9 +95,4 @@ object ApiKtorClient : ApiJokeService {
             response.body<ApiJokesList>().jokes
         }
     }
-
-    override fun close() {
-        client?.close()
-    }
-
 }
