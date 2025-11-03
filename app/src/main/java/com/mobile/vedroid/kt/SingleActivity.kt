@@ -10,21 +10,31 @@ import com.google.android.material.snackbar.Snackbar
 import com.mobile.vedroid.kt.databinding.ActivityBinding
 
 class SingleActivity : AppCompatActivity () {
-    private lateinit var binding: ActivityBinding
+
+    private var _binding: ActivityBinding? = null
+    private val binding: ActivityBinding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.binding = ActivityBinding.inflate(layoutInflater)
+        enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
+
+        _binding = ActivityBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
 
-        enableEdgeToEdge()  // reed https://developer.android.com/develop/ui/views/layout/edge-to-edge
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
     }
+
+    override fun onDestroy() {
+        _binding = null
+        super.onDestroy()
+    }
+
+
 
     fun showSnackBar (message : String ){
         Snackbar.make(binding.navHostFragment, message, Snackbar.LENGTH_LONG).show()

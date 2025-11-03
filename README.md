@@ -106,14 +106,25 @@ Log.d("TAG", "data ${response.bodyAsText()}")
 ```
 lifecycleScope.launch (Dispatchers.IO) {
     try {
-        val list = client.getJokes()
+        val jokes = client.getJokes()
         launch(Dispatchers.Main){
-            for (JokeModel joke: list) Log.d ("TAG", joke.toString());
+            for (JokeModel joke: jokes) Log.d ("TAG", joke.toString())
         }
     } catch (e: Exception){
         launch(Dispatchers.Main) {
             Log.e ("TAG", a.message")
         }
     }
+}
+```
+
+Не смотря на то, что явно компилятор не будет требовать обернуть вызов в try-catch конструкцию, стоит иметь в виду возможность различных нештатных ситуаций (неверный url-адрес, провал верификации, тех.работы на сервере, а также отсутствие интернет-соединения). Также можно использовать конструкцию runCatching:
+```
+runCatching {
+    client.getJokes()
+}.onSuccess { jokes ->
+    jokes.forEach { joke -> Log.d ("TAG", joke.toString() }
+}.onFailure { throwable ->
+    Log.e ("TAG", throwable.message")
 }
 ```

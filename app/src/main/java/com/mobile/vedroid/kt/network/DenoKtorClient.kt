@@ -18,13 +18,7 @@ import kotlinx.serialization.json.Json
 doc: https://github.com/UltiRequiem/joke-api
 examples: https://joke.deno.dev/type/programming/10
  */
-
-interface DenoJokeService: KtorService  {
-    suspend fun getJokes(): List<DenoJoke>
-    suspend fun getJokes(count: Int): List<DenoJoke>
-}
-
-object DenoKtorClient: DenoJokeService {
+object DenoKtorClient: JokeService<DenoJoke> {
 
     private val client: HttpClient by lazy {
         HttpClient(Android){
@@ -39,9 +33,8 @@ object DenoKtorClient: DenoJokeService {
     }
 
     override fun close() {
-        client?.close()
+        client.close()
     }
-
 
     override suspend fun getJokes(): List<DenoJoke> {
         val response: HttpResponse = client.get { // client.get("type/programming/5")

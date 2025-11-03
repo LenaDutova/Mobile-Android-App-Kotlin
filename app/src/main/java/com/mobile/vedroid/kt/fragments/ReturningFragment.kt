@@ -17,8 +17,7 @@ import com.mobile.vedroid.kt.model.Account
 class ReturningFragment : Fragment() {
 
     private var _binding: FragmentReturningBinding? = null
-    private val binding: FragmentReturningBinding
-        get() = _binding ?: throw RuntimeException()
+    private val binding: FragmentReturningBinding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentReturningBinding.inflate(inflater, container, false)
@@ -27,16 +26,10 @@ class ReturningFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         debugging("HI")
 
-        requireActivity().onBackPressedDispatcher.addCallback(this) {
-            debugging("Back stack click")
-            findNavController().popBackStack()
-        }
-
-        val btnStart : Button = binding.btnToStart
-        btnStart.setOnClickListener {
+        binding.btnToStart.setOnClickListener {
             if (!binding.registrationLogin.text.isNullOrBlank()
                 && binding.registrationGenderToggle.checkedButtonId != R.id.btn_not_defined) {
                 debugging("Click from returning with registration data")
@@ -52,10 +45,15 @@ class ReturningFragment : Fragment() {
             } else {
                 debugging("Click from returning, but without some params")
 
-                var warning: String = getString(R.string.text_please)
-                if (binding.registrationLogin.text.isNullOrBlank()) warning += getString(R.string.text_no_name)
-                if (binding.registrationGenderToggle.checkedButtonId == R.id.btn_not_defined)
-                    warning += getString(R.string.text_no_gender)
+                val warning = buildString {
+                    append(getString(R.string.text_please))
+                    if (binding.registrationLogin.text.isNullOrBlank()) {
+                        append(getString(R.string.text_no_name))
+                    }
+                    if (binding.registrationGenderToggle.checkedButtonId == R.id.btn_not_defined) {
+                        append(getString(R.string.text_no_gender))
+                    }
+                }
 
                 (activity as SingleActivity).showSnackBar(warning)
             }
@@ -63,7 +61,7 @@ class ReturningFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 }

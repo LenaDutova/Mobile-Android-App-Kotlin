@@ -3,6 +3,8 @@ package com.mobile.vedroid.kt.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.vedroid.kt.databinding.ItemJokeBinding
 import com.mobile.vedroid.kt.model.DenoJoke
@@ -27,12 +29,23 @@ class DenoJokesAdapter (val jokes: MutableList<DenoJoke> = mutableListOf<DenoJok
 
     override fun addItems(newJokes: List<DenoJoke>) : Int {
         var count = 0
-        for (joke in newJokes){
+
+//        // in kotlin as java
+//        for (joke in newJokes){
+//            if (!jokes.contains(joke)) {
+//                jokes.add(0, joke);
+//                count++;
+//            }
+//        }
+
+        // in kotlin with Iterable.extensions
+        newJokes.forEach { joke ->
             if (!jokes.contains(joke)) {
-                jokes.add(0, joke);
-                count++;
+                jokes.add(index = 0, element = joke)
+                count++
             }
         }
+
         if (count > 0) notifyDataSetChanged()
         return count
     }
@@ -42,12 +55,23 @@ class DenoJokesAdapter (val jokes: MutableList<DenoJoke> = mutableListOf<DenoJok
         RecyclerView.ViewHolder (binding.root) {
 
         fun bindItem(item: DenoJoke){
-            binding.itemSingleJokeText.visibility = View.GONE
-            binding.itemTwopartJokeSetup.visibility = View.VISIBLE
-            binding.itemTwopartJokeDelivery.visibility = View.VISIBLE
+//            // in kotlin as java
+//            binding.itemSingleJokeText.visibility = View.GONE
+//            binding.itemTwopartJokeSetup.visibility = View.VISIBLE
+//            binding.itemTwopartJokeDelivery.visibility = View.VISIBLE
+//
+//            binding.itemTwopartJokeSetup.text = item.setup
+//            binding.itemTwopartJokeDelivery.text = item.delivery
 
-            binding.itemTwopartJokeSetup.text = item.setup
-            binding.itemTwopartJokeDelivery.text = item.delivery
+            // in kotlin with "with" and View.extensions
+            with(binding) {
+                itemSingleJokeText.isGone = true
+                itemTwopartJokeSetup.isVisible = true
+                itemTwopartJokeDelivery.isVisible = true
+
+                itemTwopartJokeSetup.text = item.setup
+                itemTwopartJokeDelivery.text = item.delivery
+            }
         }
     }
 }
