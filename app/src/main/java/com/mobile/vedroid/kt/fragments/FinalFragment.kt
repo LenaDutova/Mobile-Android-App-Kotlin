@@ -5,29 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.databinding.FragmentFinalBinding
 import com.mobile.vedroid.kt.databinding.ItemMessageBinding
 import com.mobile.vedroid.kt.extensions.debugging
 
-class FinalFragment : Fragment (R.layout.fragment_final) {
+class FinalFragment : Fragment (/*R.layout.fragment_final*/) {
 
     private var _binding: FragmentFinalBinding? = null
-    private val binding: FragmentFinalBinding
-            get() = _binding ?: throw RuntimeException()
+    private val binding: FragmentFinalBinding get() = _binding!!
 
-    lateinit var messageAdapter : MessageAdapter
+    override fun onCreateView (inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle? ): View? {
+        _binding = FragmentFinalBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
         debugging("HI")
 
-        _binding = FragmentFinalBinding.bind(view)
-
-        messageAdapter = MessageAdapter(getMockMessages())  // Create and add data adapter
-        binding.messagesRecyclerView.layoutManager = LinearLayoutManager(view.context)  // Default orientation - vertical
+        val messageAdapter = MessageAdapter(getMockMessages())  // Create and add data adapter
         binding.messagesRecyclerView.adapter = messageAdapter
         binding.messagesRecyclerView.scrollToPosition(messageAdapter.getItemCount() - 1)    // Scroll to last
 
@@ -37,8 +35,8 @@ class FinalFragment : Fragment (R.layout.fragment_final) {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
     }
 
     /**
