@@ -1,16 +1,23 @@
-package com.mobile.vedroid.kt.fragments
+package com.mobile.vedroid.kt.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.databinding.FragmentStartBinding
 import com.mobile.vedroid.kt.extensions.debugging
 import com.mobile.vedroid.kt.model.Account
+import com.mobile.vedroid.kt.storage.AccountSPStore
+import com.mobile.vedroid.kt.storage.SettingsDSStore
+import com.mobile.vedroid.kt.ui.SingleActivity
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 class StartFragment : Fragment() {
 
@@ -18,6 +25,8 @@ class StartFragment : Fragment() {
     private val binding: FragmentStartBinding get() = _binding!!
 
     private val args: StartFragmentArgs by navArgs()
+    private val sp = AccountSPStore()
+    private val ds = SettingsDSStore()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
@@ -39,7 +48,33 @@ class StartFragment : Fragment() {
             findNavController().navigate(R.id.action_screen_start_to_register)
         }
 
-        args.ACCOUNT?.let { user -> showGreeting(user = user) }
+        binding.fabBtnSettings.setOnClickListener {
+            debugging("Click to settings")
+            findNavController().navigate(R.id.action_screen_start_to_settings)
+        }
+
+        args.ACCOUNT
+            ?.let { user ->
+                showGreeting(user = user)
+                debugging("Save new user account into SharedPreferences")
+                sp.saveAccount(user)
+            }
+            ?: run {
+                // try to read saved Account
+                sp.loadAccount()
+                    ?.let { user ->
+                        showGreeting(user)
+                        debugging("Read saved Account")
+                    }
+                    ?: run { debugging("No returning or saved Account") }
+            }
+
+        // read old mode & checkboxRuLanguage
+        lifecycleScope.launch {
+            val mode = ds.loadLightOrNightMode().first()
+            if (mode != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) AppCompatDelegate.setDefaultNightMode(mode)
+            (activity as SingleActivity).setLocaleAlwaysRu(ds.isAlwaysRuLanguage().first())
+        }
     }
 
     override fun onDestroyView() {

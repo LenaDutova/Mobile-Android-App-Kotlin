@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
+        android:name=".MobileApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,7 +18,7 @@
         android:theme="@style/Base.Theme.MobileKotlin">
 
         <activity
-            android:name=".SingleActivity"
+            android:name=".ui.SingleActivity"
             android:exported="true">
 
             <intent-filter>

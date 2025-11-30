@@ -11,7 +11,7 @@
 
         <item name="android:textColor">?attr/colorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/text_big</item>
+        <item name="android:textSize">@dimen/text_tall</item>
         <item name="android:gravity">center</item>
     </style>
 

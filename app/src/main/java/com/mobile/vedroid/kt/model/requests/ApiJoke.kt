@@ -1,5 +1,6 @@
-package com.mobile.vedroid.kt.model
+package com.mobile.vedroid.kt.model.requests
 
+import com.mobile.vedroid.kt.model.JokeAdapterModel
 import kotlinx.serialization.Serializable
 
 /*
@@ -40,10 +41,12 @@ import kotlinx.serialization.Serializable
 ]
  */
 @Serializable
-data class ApiJoke(val id: Int, val type: String, val joke: String?, val setup: String?, val delivery: String?){
-
-    fun isTypeSingle () = (type == "single")
-
+data class ApiJoke(
+        private val id: Int,
+        private val type: String,
+        private val joke: String?,
+        private val setup: String?,
+        private val delivery: String?) : JokeAdapterModel {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -57,6 +60,18 @@ data class ApiJoke(val id: Int, val type: String, val joke: String?, val setup: 
     override fun hashCode(): Int {
         return id
     }
+
+    // region // Pattern-Adapter
+
+    override fun getId(): Int = id
+
+    override fun isSingle(): Boolean = (type == "single")
+
+    override fun getSetup(): String = if (isSingle()) joke!! else setup!!
+
+    override fun getDelivery(): String? = delivery
+
+    // endregion
 }
 
 @Serializable

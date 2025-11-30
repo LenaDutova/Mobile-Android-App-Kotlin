@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="?attr/colorTertiaryContainer"
 
-    tools:context=".fragments.FinalFragment">
+    tools:context=".ui.fragments.FinalFragment">
 
     <TextView
         android:id="@+id/messages_placeholder"
@@ -19,7 +19,7 @@
 
         style="@style/MobileApp.Title"
         android:textColor="?attr/colorOnTertiary"
-        android:text="@string/text_no_data"
+        android:text="@string/warning_text_no_data"
         />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

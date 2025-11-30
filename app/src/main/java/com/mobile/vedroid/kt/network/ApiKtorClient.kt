@@ -1,8 +1,8 @@
 package com.mobile.vedroid.kt.network
 
 import android.util.Log
-import com.mobile.vedroid.kt.model.ApiJoke
-import com.mobile.vedroid.kt.model.ApiJokesList
+import com.mobile.vedroid.kt.model.requests.ApiJoke
+import com.mobile.vedroid.kt.model.requests.ApiJokesList
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.engine.android.Android

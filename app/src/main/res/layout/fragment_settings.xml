@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".ui.fragments.SettingsFragment">
+
+    <com.google.android.material.button.MaterialButtonToggleGroup
+        android:id="@+id/mode_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:singleSelection="true"
+        app:selectionRequired="true"
+        app:checkedButton="@id/btn_system"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btn_dark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/toggle_mode_dark"
+            style="?attr/materialIconButtonOutlinedStyle"
+            app:icon="@drawable/icon_mode_dark"/>
+
+        <Button
+            android:id="@+id/btn_system"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/toggle_mode_system"
+            style="?attr/materialIconButtonOutlinedStyle"/>
+
+        <Button
+            android:id="@+id/btn_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/toggle_mode_light"
+            style="?attr/materialIconButtonOutlinedStyle"
+            app:icon="@drawable/icon_mode_light"/>
+    </com.google.android.material.button.MaterialButtonToggleGroup>
+
+    <com.google.android.material.checkbox.MaterialCheckBox
+        android:id="@+id/checkbox_ru_language"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/normal"
+        android:paddingBottom="@dimen/normal"
+
+        android:text="@string/checkbox_language_ru"
+
+        app:layout_constraintTop_toBottomOf="@id/mode_toggle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <Button
+        android:id="@+id/btn_close_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal"
+
+        android:text="@string/fab_close"
+        style="?attr/materialButtonStyle"
+        app:icon="@drawable/icon_close"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <Button
+        android:id="@+id/btn_log_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/normal"
+
+        android:text="@string/btn_log_out"
+        style="?attr/materialButtonOutlinedStyle"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btn_close_settings" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

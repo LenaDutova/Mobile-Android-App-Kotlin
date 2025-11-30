@@ -1,4 +1,4 @@
-package com.mobile.vedroid.kt.fragments
+package com.mobile.vedroid.kt.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.mobile.vedroid.kt.R
-import com.mobile.vedroid.kt.SingleActivity
+import com.mobile.vedroid.kt.ui.SingleActivity
 import com.mobile.vedroid.kt.databinding.FragmentReturningBinding
 import com.mobile.vedroid.kt.extensions.debugging
 import com.mobile.vedroid.kt.model.Account
@@ -37,9 +37,7 @@ class ReturningFragment : Fragment() {
                 val action = ReturningFragmentDirections.actionScreenRegisterReturnStart(
                     ACCOUNT = Account(
                         binding.registrationLogin.text.toString(),
-                        binding.registrationGenderToggle.checkedButtonId == R.id.btn_man),
-                    LOGIN = binding.registrationLogin.text.toString(),
-                    GENDER = (binding.registrationGenderToggle.checkedButtonId == R.id.btn_man))
+                        binding.registrationGenderToggle.checkedButtonId == R.id.btn_man))
 
                 findNavController().navigate(action)
             } else {

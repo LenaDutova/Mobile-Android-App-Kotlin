@@ -1,4 +1,4 @@
-package com.mobile.vedroid.kt
+package com.mobile.vedroid.kt.ui
 
 import android.os.Bundle
 import android.widget.Toast
@@ -8,8 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.snackbar.Snackbar
 import com.mobile.vedroid.kt.databinding.ActivityBinding
+import com.mobile.vedroid.kt.extensions.debugging
+import java.util.Locale
 
-class SingleActivity : AppCompatActivity () {
+class SingleActivity : AppCompatActivity() {
 
     private var _binding: ActivityBinding? = null
     private val binding: ActivityBinding get() = _binding!!
@@ -33,6 +35,31 @@ class SingleActivity : AppCompatActivity () {
     override fun onDestroy() {
         _binding = null
         super.onDestroy()
+    }
+
+
+    // fixme from Deplecated
+    fun setLocaleAlwaysRu(always: Boolean) {
+        var needUpdateUI = true
+        var locale: Locale? = null
+
+        if (always) {
+            needUpdateUI =
+                getResources().getConfiguration().getLocales().get(0).getLanguage() != "ru"
+            locale = Locale("ru")
+        } else {
+            needUpdateUI = (getResources().getConfiguration().getLocales().get(0).getLanguage()
+                    != Locale.getDefault().getLanguage())
+            locale = Locale(Locale.getDefault().getLanguage())
+        }
+        debugging("Set Locale (" + locale.getLanguage() + "), need update UI (" + needUpdateUI + ")")
+
+        val resources = getResources()
+        val config = resources.getConfiguration()
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.getDisplayMetrics())
+
+        if (needUpdateUI) recreate()
     }
 
     fun showSnackBar (message : String ){

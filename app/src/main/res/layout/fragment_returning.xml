@@ -7,13 +7,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context=".fragments.ReturningFragment">
+    tools:context=".ui.fragments.ReturningFragment">
 
     <com.google.android.material.button.MaterialButtonToggleGroup
         android:id="@+id/registration_gender_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         app:singleSelection="true"
+        app:selectionRequired="true"
         app:checkedButton="@id/btn_not_defined"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,21 +29,21 @@
             android:id="@+id/btn_man"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/toggle_man"
+            android:text="@string/toggle_sex_man"
             />
         <Button
             style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/btn_not_defined"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/toggle_not_defined"
+            android:text="@string/toggle_sex_not_defined"
             />
         <Button
             style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/btn_woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/toggle_woman"
+            android:text="@string/toggle_sex_woman"
             />
     </com.google.android.material.button.MaterialButtonToggleGroup>
 
