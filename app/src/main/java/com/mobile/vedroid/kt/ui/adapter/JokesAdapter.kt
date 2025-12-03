@@ -1,5 +1,6 @@
 package com.mobile.vedroid.kt.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
@@ -27,14 +28,15 @@ class JokesAdapter (val jokes: MutableList<JokeAdapterModel> = mutableListOf<Jok
 
     fun addItems(newJokes: List<JokeAdapterModel>) : List<JokeAdapterModel> {
         val addedJokes = mutableListOf<JokeAdapterModel>()
-        newJokes.forEach { joke ->
-            if (!jokes.contains(joke)) {
-                jokes.add(joke)
-                notifyItemInserted(jokes.size - 1) // todo проверить работу?
-                addedJokes.add(joke)
+        synchronized(jokes){
+            newJokes.forEach { joke ->
+                if (!jokes.contains(joke)) {
+                    jokes.add(joke)
+                    notifyItemInserted(jokes.size - 1)
+                    addedJokes.add(joke)
+                }
             }
         }
-//        if (addedJokes.isNotEmpty()) notifyDataSetChanged()
         return addedJokes
     }
 

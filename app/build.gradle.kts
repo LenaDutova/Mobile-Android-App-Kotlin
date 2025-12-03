@@ -1,9 +1,18 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("androidx.navigation.safeargs.kotlin") // add safe args in navigation with navGraph
     alias(libs.plugins.kotlin.serialization) // add Json serialization in Ktor
+    alias(libs.plugins.devtools.ksp)   // add KSP (Kotlin Symbol Processing)
 }
+
+//kotlin {
+//    compilerOptions {
+//        jvmTarget = JvmTarget.fromTarget("17")
+//    }
+//}
 
 android {
     namespace = "com.mobile.vedroid.kt"
@@ -75,7 +84,12 @@ dependencies {
     implementation(libs.ktor.serialization.kotlinx.json)
 
     // DataStore
-    implementation("androidx.datastore:datastore-preferences:1.2.0")
+    implementation(libs.androidx.datastore.preferences)
+
+    // Room
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
 
     // tests
     testImplementation(libs.junit)

@@ -50,11 +50,8 @@ data class ApiJoke(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as ApiJoke
-
-        return id == other.id
+        if (other is JokeAdapterModel)  return id == other.getId()
+        else return false
     }
 
     override fun hashCode(): Int {

@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.datastore.core.FileStorage
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.databinding.FragmentFinalBinding
 import com.mobile.vedroid.kt.extensions.debugging
@@ -17,18 +16,14 @@ import com.mobile.vedroid.kt.network.ApiKtorClient
 import com.mobile.vedroid.kt.network.DenoKtorClient
 import com.mobile.vedroid.kt.storage.FileManager
 import com.mobile.vedroid.kt.storage.OfflineStorage
+import com.mobile.vedroid.kt.storage.sqlite.SQLiteManager
 import com.mobile.vedroid.kt.ui.SingleActivity
 import com.mobile.vedroid.kt.ui.adapter.JokesAdapter
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 class FinalFragment : Fragment() {
-
-    companion object {
-        const val DENO_OR_API_JOKES : Boolean = true
-        const val FILE_OR_DB_STORAGE : Boolean = true
-    }
 
     private var _binding: FragmentFinalBinding? = null
     private val binding: FragmentFinalBinding get() = _binding!!
@@ -38,11 +33,9 @@ class FinalFragment : Fragment() {
     private var _storage: OfflineStorage? = null
     private val storage: OfflineStorage get() = _storage!!
 
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFinalBinding.inflate(inflater, container, false)
-        _storage = if (FILE_OR_DB_STORAGE) FileManager() else FileManager()
+        _storage = if (FILE_OR_DB_STORAGE) FileManager() else SQLiteManager()
         val view = binding.root
         return view
     }
@@ -60,7 +53,9 @@ class FinalFragment : Fragment() {
 
         // load saved jokes or load new
         lifecycleScope.launch {
-            storage.load().collect { jokes ->
+            storage.load()
+                .take(1)
+                .collect { jokes ->
                 if (jokes.isEmpty()) {
                     debugging("No saved jokes, need downloading")
                     loadJokes()
@@ -81,6 +76,7 @@ class FinalFragment : Fragment() {
         _binding = null
         super.onDestroyView()
     }
+
 
 
     private fun checkPlaceholder(){
@@ -126,7 +122,7 @@ class FinalFragment : Fragment() {
         }
     }
 
-    private fun  loadApiJokes(){
+    private fun loadApiJokes(){
         lifecycleScope.launch{
             runCatching {
                 ApiKtorClient.getJokes()
@@ -139,6 +135,12 @@ class FinalFragment : Fragment() {
                 binding.swipeToRefresh.isRefreshing = false
             }
         }
+    }
 
+
+
+    companion object {
+        const val DENO_OR_API_JOKES : Boolean = false
+        const val FILE_OR_DB_STORAGE : Boolean = true
     }
 }

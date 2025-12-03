@@ -78,12 +78,12 @@ object ApiKtorClient : JokeService<ApiJoke> {
                 method = HttpMethod.Get
                 url {
                     path("Programming")
-                    parameter("amount", 5)
+                    parameter("amount", 3)
                 }
             }
 
-            Log.d("TAG_ApiKtorClient", "loading in ${Thread.currentThread().name} request $response")
-            Log.d("TAG_ApiKtorClient", "data ${response.bodyAsText()}")
+//            Log.d("TAG_ApiKtorClient", "Loading in ${Thread.currentThread().name} request $response")
+//            Log.d("TAG_ApiKtorClient", "Loading data ${response.bodyAsText()}")
 
             (response.body() as ApiJokesList).jokes
         }

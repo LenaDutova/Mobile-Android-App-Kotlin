@@ -41,12 +41,12 @@ object DenoKtorClient: JokeService<DenoJoke> {
             url {
                 protocol = URLProtocol.HTTPS
                 host = "joke.deno.dev"
-                path("type", "programming", "5")
+                path("type", "programming", "3")
             }
         }
 
-        Log.d ("TAG_DenoJokeService", "loading in ${Thread.currentThread().name} request $response")
-        Log.d ("TAG_DenoJokeService", "data ${response.bodyAsText()}")
+//        Log.d ("TAG_DenoJokeService", "Loading in ${Thread.currentThread().name} request $response")
+//        Log.d ("TAG_DenoJokeService", "Loading data ${response.bodyAsText()}")
 
         return response.body<List<DenoJoke>>()
     }
