@@ -12,9 +12,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "DS")
-class SettingsDSStore {
 
-//    val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "DS")
+class SettingsDSStore {
 
     suspend fun saveLightOrNightMode(mode: Int) {
         MobileApplication.mobileApplicationContext().dataStore.updateData {
@@ -39,6 +38,8 @@ class SettingsDSStore {
     fun isAlwaysRuLanguage(): Flow<Boolean> = MobileApplication.mobileApplicationContext().dataStore.data.map { preferences ->
         preferences[SETTINGS_IS_ALWAYS_RU] ?: false
     }
+
+
 
     companion object {
         val SETTINGS_MODE = intPreferencesKey("mode")

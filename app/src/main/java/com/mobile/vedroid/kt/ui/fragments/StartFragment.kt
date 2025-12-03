@@ -68,13 +68,6 @@ class StartFragment : Fragment() {
                     }
                     ?: run { debugging("No returning or saved Account") }
             }
-
-        // read old mode & checkboxRuLanguage
-        lifecycleScope.launch {
-            val mode = ds.loadLightOrNightMode().first()
-            if (mode != AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) AppCompatDelegate.setDefaultNightMode(mode)
-            (activity as SingleActivity).setLocaleAlwaysRu(ds.isAlwaysRuLanguage().first())
-        }
     }
 
     override fun onDestroyView() {

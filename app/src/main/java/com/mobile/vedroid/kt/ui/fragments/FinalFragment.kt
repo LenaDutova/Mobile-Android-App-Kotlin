@@ -5,25 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.datastore.core.FileStorage
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.mobile.vedroid.kt.R
-import com.mobile.vedroid.kt.ui.SingleActivity
-import com.mobile.vedroid.kt.ui.adapter.JokesAdapter
 import com.mobile.vedroid.kt.databinding.FragmentFinalBinding
 import com.mobile.vedroid.kt.extensions.debugging
 import com.mobile.vedroid.kt.model.JokeAdapterModel
 import com.mobile.vedroid.kt.network.ApiKtorClient
 import com.mobile.vedroid.kt.network.DenoKtorClient
+import com.mobile.vedroid.kt.storage.FileManager
+import com.mobile.vedroid.kt.storage.OfflineStorage
+import com.mobile.vedroid.kt.ui.SingleActivity
+import com.mobile.vedroid.kt.ui.adapter.JokesAdapter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import java.lang.Exception
 
 class FinalFragment : Fragment() {
 
     companion object {
-        const val DENO_OR_API_JOKES : Boolean = false
+        const val DENO_OR_API_JOKES : Boolean = true
+        const val FILE_OR_DB_STORAGE : Boolean = true
     }
 
     private var _binding: FragmentFinalBinding? = null
@@ -31,9 +35,14 @@ class FinalFragment : Fragment() {
 
     private var jokeAdapter: JokesAdapter = JokesAdapter()
 
+    private var _storage: OfflineStorage? = null
+    private val storage: OfflineStorage get() = _storage!!
+
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFinalBinding.inflate(inflater, container, false)
+        _storage = if (FILE_OR_DB_STORAGE) FileManager() else FileManager()
         val view = binding.root
         return view
     }
@@ -42,7 +51,6 @@ class FinalFragment : Fragment() {
         super.onCreate(savedInstanceState)
         debugging("HI")
 
-        binding.messagesRecyclerView.layoutManager = LinearLayoutManager(view.context)  // Default orientation - vertical
         binding.messagesRecyclerView.adapter = jokeAdapter
 
         binding.swipeToRefresh.setOnRefreshListener {
@@ -50,8 +58,19 @@ class FinalFragment : Fragment() {
             loadJokes()
         }
 
-        // TODO load saved jokes or load new
-        loadJokes()
+        // load saved jokes or load new
+        lifecycleScope.launch {
+            storage.load().collect { jokes ->
+                if (jokes.isEmpty()) {
+                    debugging("No saved jokes, need downloading")
+                    loadJokes()
+                } else {
+                    debugging("Load jokes from storage: ${jokes.size}")
+                    jokeAdapter.addItems(jokes)
+                    checkPlaceholder()
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
@@ -79,11 +98,13 @@ class FinalFragment : Fragment() {
         val addedJokes = jokeAdapter.addItems(newJokes)
 
         if (addedJokes.isNotEmpty()){
-            debugging("show in ${Thread.currentThread().name} ${addedJokes.size} jokes")
             checkPlaceholder()
 
-            // TODO save new here
-
+            // save new here
+            lifecycleScope.launch {
+                storage.save(addedJokes)
+                debugging("Save ${addedJokes.size} new jokes")
+            }
         }
     }
 

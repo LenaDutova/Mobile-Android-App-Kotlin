@@ -38,30 +38,6 @@ class SingleActivity : AppCompatActivity() {
     }
 
 
-    // fixme from Deplecated
-    fun setLocaleAlwaysRu(always: Boolean) {
-        var needUpdateUI = true
-        var locale: Locale? = null
-
-        if (always) {
-            needUpdateUI =
-                getResources().getConfiguration().getLocales().get(0).getLanguage() != "ru"
-            locale = Locale("ru")
-        } else {
-            needUpdateUI = (getResources().getConfiguration().getLocales().get(0).getLanguage()
-                    != Locale.getDefault().getLanguage())
-            locale = Locale(Locale.getDefault().getLanguage())
-        }
-        debugging("Set Locale (" + locale.getLanguage() + "), need update UI (" + needUpdateUI + ")")
-
-        val resources = getResources()
-        val config = resources.getConfiguration()
-        config.setLocale(locale)
-        resources.updateConfiguration(config, resources.getDisplayMetrics())
-
-        if (needUpdateUI) recreate()
-    }
-
     fun showSnackBar (message : String ){
         Snackbar.make(binding.navHostFragment, message, Snackbar.LENGTH_LONG).show()
     }

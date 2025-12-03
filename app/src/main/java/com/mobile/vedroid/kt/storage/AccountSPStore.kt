@@ -41,6 +41,8 @@ class AccountSPStore (){
         else return null
     }
 
+
+
     companion object SP{
         private const val ACCOUNT_NAME = "NAME"
         private const val ACCOUNT_SEX = "SEX"

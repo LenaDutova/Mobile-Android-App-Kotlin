@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.mobile.vedroid.kt.MobileApplication
 import com.mobile.vedroid.kt.R
 import com.mobile.vedroid.kt.databinding.FragmentSettingsBinding
 import com.mobile.vedroid.kt.extensions.debugging
@@ -48,11 +49,10 @@ class SettingsFragment : Fragment() {
             if (isChecked) debugging("Check always Russian")
             else debugging("Uncheck always Russian, use default Locale")
 
-            (activity as SingleActivity).setLocaleAlwaysRu(isChecked)
-
             // save checkboxRuLanguage
             lifecycleScope.launch {
                 ds.saveAlwaysRuLanguage(isChecked)
+                MobileApplication.setLocaleAlwaysRu(isChecked)
             }
 
         }
@@ -72,11 +72,11 @@ class SettingsFragment : Fragment() {
                         AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
                     }
                 }
-                AppCompatDelegate.setDefaultNightMode(mode)
 
                 // save mode
                 lifecycleScope.launch {
                     ds.saveLightOrNightMode(mode)
+                    AppCompatDelegate.setDefaultNightMode(mode)
                 }
             }
         }
